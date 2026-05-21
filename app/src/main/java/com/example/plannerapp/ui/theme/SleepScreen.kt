@@ -52,14 +52,10 @@ fun SleepScreen() {
     val purpleColor =
         Color(0xFFB026FF)
 
-    // ---------------- SWITCH ----------------
-
     var reminderEnabled by remember {
 
         mutableStateOf(false)
     }
-
-    // ---------------- TIME ----------------
 
     var sleepTime by remember {
 
@@ -70,8 +66,6 @@ fun SleepScreen() {
 
         mutableStateOf("06:00 AM")
     }
-
-    // ---------------- TODAY ----------------
 
     val todayDate =
         SimpleDateFormat(
@@ -84,8 +78,6 @@ fun SleepScreen() {
             "EEEE",
             Locale.getDefault()
         ).format(Date())
-
-    // ---------------- HISTORY ----------------
 
     var sleepHistory by remember {
 
@@ -125,8 +117,6 @@ fun SleepScreen() {
             )
         )
     }
-
-    // ---------------- TIME PICKERS ----------------
 
     fun openSleepPicker() {
 
@@ -252,8 +242,6 @@ fun SleepScreen() {
                     Modifier.height(25.dp)
             )
 
-            // ---------------- TODAY CARD ----------------
-
             Card(
 
                 modifier = Modifier
@@ -332,8 +320,6 @@ fun SleepScreen() {
                             Modifier.height(18.dp)
                     )
 
-                    // ---------------- INFO TEXT ----------------
-
                     Text(
 
                         text =
@@ -402,10 +388,134 @@ fun SleepScreen() {
 
             Spacer(
                 modifier =
-                    Modifier.height(25.dp)
+                    Modifier.height(20.dp)
             )
 
-            // ---------------- BEDTIME CARD ----------------
+            Card(
+
+                modifier = Modifier
+                    .fillMaxWidth(),
+
+                shape =
+                    RoundedCornerShape(25.dp),
+
+                colors =
+                    CardDefaults.cardColors(
+                        containerColor = cardColor
+                    )
+
+            ) {
+
+                Column(
+
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(20.dp)
+
+                ) {
+
+                    Text(
+
+                        text = "Sleep Information",
+
+                        color = Color.White,
+
+                        fontSize = 24.sp,
+
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Spacer(
+                        modifier =
+                            Modifier.height(15.dp)
+                    )
+
+                    Text(
+
+                        text =
+                            "• Adults aged 15 to 65 years should sleep around 7 to 9 hours daily.",
+
+                        color = Color.LightGray,
+
+                        fontSize = 17.sp,
+
+                        lineHeight = 26.sp
+                    )
+
+                    Spacer(
+                        modifier =
+                            Modifier.height(10.dp)
+                    )
+
+                    Text(
+
+                        text =
+                            "• Proper sleep improves memory, focus, mood, immunity and brain performance.",
+
+                        color = Color.LightGray,
+
+                        fontSize = 17.sp,
+
+                        lineHeight = 26.sp
+                    )
+
+                    Spacer(
+                        modifier =
+                            Modifier.height(10.dp)
+                    )
+
+                    Text(
+
+                        text =
+                            "• Sleeping late daily may reduce energy levels and productivity.",
+
+                        color = Color.LightGray,
+
+                        fontSize = 17.sp,
+
+                        lineHeight = 26.sp
+                    )
+
+                    Spacer(
+                        modifier =
+                            Modifier.height(10.dp)
+                    )
+
+                    Text(
+
+                        text =
+                            "• Best bedtime recommendation: 9:30 PM to 11:00 PM.",
+
+                        color = purpleColor,
+
+                        fontSize = 18.sp,
+
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Spacer(
+                        modifier =
+                            Modifier.height(10.dp)
+                    )
+
+                    Text(
+
+                        text =
+                            "• Consistent sleep timing helps maintain a healthy body clock.",
+
+                        color = Color.LightGray,
+
+                        fontSize = 17.sp,
+
+                        lineHeight = 26.sp
+                    )
+                }
+            }
+
+            Spacer(
+                modifier =
+                    Modifier.height(25.dp)
+            )
 
             Card(
 
@@ -530,8 +640,6 @@ fun SleepScreen() {
                             Modifier.height(20.dp)
                     )
 
-                    // ---------------- TIME BUTTONS ----------------
-
                     Row(
 
                         modifier = Modifier
@@ -587,8 +695,6 @@ fun SleepScreen() {
                             Modifier.height(20.dp)
                     )
 
-                    // ---------------- SAVE BUTTON ----------------
-
                     Button(
 
                         onClick = {
@@ -613,7 +719,7 @@ fun SleepScreen() {
                                 if (diff < 0) {
 
                                     diff +=
-                                        24 * 60 * 60 * 1000
+                                            24 * 60 * 60 * 1000
                                 }
 
                                 val hours =
@@ -703,8 +809,6 @@ fun SleepScreen() {
                     Modifier.height(30.dp)
             )
 
-            // ---------------- HISTORY TITLE ----------------
-
             Row(
 
                 modifier = Modifier
@@ -778,8 +882,6 @@ fun SleepScreen() {
                     Modifier.height(20.dp)
             )
         }
-
-        // ---------------- HISTORY ----------------
 
         items(sleepHistory) { sleep ->
 
