@@ -10,7 +10,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.NoteAlt
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,7 +23,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 data class NoteItem(
 
@@ -45,8 +50,6 @@ fun ReportsScreen() {
     val pinkColor =
         Color(0xFFFF2D55)
 
-    // ---------------- INPUTS ----------------
-
     var title by remember {
 
         mutableStateOf("")
@@ -56,8 +59,6 @@ fun ReportsScreen() {
 
         mutableStateOf("")
     }
-
-    // ---------------- DATE ----------------
 
     fun getCurrentDate(): String {
 
@@ -69,8 +70,6 @@ fun ReportsScreen() {
 
         ).format(Date())
     }
-
-    // ---------------- NOTES ----------------
 
     var notesList by remember {
 
@@ -96,8 +95,6 @@ fun ReportsScreen() {
                     Modifier.height(10.dp)
             )
 
-            // ---------------- TITLE ----------------
-
             Text(
 
                 text = "My Notes",
@@ -114,8 +111,6 @@ fun ReportsScreen() {
                 modifier =
                     Modifier.height(25.dp)
             )
-
-            // ---------------- NOTES CARD ----------------
 
             Card(
 
@@ -182,8 +177,6 @@ fun ReportsScreen() {
                             Modifier.height(25.dp)
                     )
 
-                    // ---------------- TITLE FIELD ----------------
-
                     OutlinedTextField(
 
                         value = title,
@@ -222,8 +215,6 @@ fun ReportsScreen() {
                         modifier =
                             Modifier.height(20.dp)
                     )
-
-                    // ---------------- DESCRIPTION FIELD ----------------
 
                     OutlinedTextField(
 
@@ -264,8 +255,6 @@ fun ReportsScreen() {
                         modifier =
                             Modifier.height(25.dp)
                     )
-
-                    // ---------------- SAVE BUTTON ----------------
 
                     Button(
 
@@ -346,8 +335,6 @@ fun ReportsScreen() {
                     Modifier.height(30.dp)
             )
 
-            // ---------------- NOTES TITLE ----------------
-
             Row(
 
                 modifier = Modifier
@@ -423,8 +410,6 @@ fun ReportsScreen() {
             )
         }
 
-        // ---------------- NOTES LIST ----------------
-
         itemsIndexed(notesList) { index, note ->
 
             var isEditing by remember {
@@ -468,8 +453,6 @@ fun ReportsScreen() {
 
                     if (isEditing) {
 
-                        // ---------------- EDIT TITLE ----------------
-
                         OutlinedTextField(
 
                             value = editedTitle,
@@ -508,8 +491,6 @@ fun ReportsScreen() {
                             modifier =
                                 Modifier.height(15.dp)
                         )
-
-                        // ---------------- EDIT DESCRIPTION ----------------
 
                         OutlinedTextField(
 
@@ -550,8 +531,6 @@ fun ReportsScreen() {
                             modifier =
                                 Modifier.height(20.dp)
                         )
-
-                        // ---------------- SAVE CHANGES ----------------
 
                         Button(
 
@@ -602,8 +581,6 @@ fun ReportsScreen() {
 
                     } else {
 
-                        // ---------------- NOTE VIEW ----------------
-
                         Text(
 
                             text = note.title,
@@ -650,8 +627,6 @@ fun ReportsScreen() {
                             modifier =
                                 Modifier.height(18.dp)
                         )
-
-                        // ---------------- BUTTONS ----------------
 
                         Row {
 
