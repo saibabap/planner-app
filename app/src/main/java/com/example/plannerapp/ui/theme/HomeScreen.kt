@@ -11,7 +11,13 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -61,8 +67,6 @@ fun HomeScreen(
         )
     }
 
-    // ---------------- LOAD TASKS ----------------
-
     LaunchedEffect(Unit) {
 
         manager.getTasks.collect {
@@ -71,15 +75,11 @@ fun HomeScreen(
         }
     }
 
-    // ---------------- ACTIVE TASKS ----------------
-
     val activeTasks =
         tasks.filter {
 
             !it.deleted
         }
-
-    // ---------------- COMPLETED COUNT ----------------
 
     val completedTasks =
         activeTasks.count {
@@ -280,8 +280,6 @@ fun HomeScreen(
                     Modifier.height(10.dp)
             )
 
-            // ---------------- TITLE ----------------
-
             Text(
 
                 text =
@@ -301,8 +299,6 @@ fun HomeScreen(
                 modifier =
                     Modifier.height(20.dp)
             )
-
-            // ---------------- STATS CARD ----------------
 
             if (activeTasks.isNotEmpty()) {
 
@@ -409,8 +405,6 @@ fun HomeScreen(
                         Modifier.height(20.dp)
                 )
             }
-
-            // ---------------- EMPTY UI ----------------
 
             if (activeTasks.isEmpty()) {
 
@@ -613,8 +607,6 @@ fun HomeScreen(
                                     .padding(22.dp)
                             ) {
 
-                                // ---------------- TOP ROW ----------------
-
                                 Row(
 
                                     modifier = Modifier
@@ -721,8 +713,6 @@ fun HomeScreen(
                                         )
                                 )
 
-                                // ---------------- EDIT MODE ----------------
-
                                 if (isEditing) {
 
                                     OutlinedTextField(
@@ -744,23 +734,7 @@ fun HomeScreen(
                                             Text(
                                                 "Edit Task"
                                             )
-                                        },
-
-                                        colors =
-                                            OutlinedTextFieldDefaults.colors(
-
-                                                focusedBorderColor =
-                                                    pinkColor,
-
-                                                unfocusedBorderColor =
-                                                    Color.Gray,
-
-                                                focusedTextColor =
-                                                    Color.White,
-
-                                                unfocusedTextColor =
-                                                    Color.White
-                                            )
+                                        }
                                     )
 
                                     Spacer(
@@ -789,23 +763,7 @@ fun HomeScreen(
                                             Text(
                                                 "Edit Date"
                                             )
-                                        },
-
-                                        colors =
-                                            OutlinedTextFieldDefaults.colors(
-
-                                                focusedBorderColor =
-                                                    pinkColor,
-
-                                                unfocusedBorderColor =
-                                                    Color.Gray,
-
-                                                focusedTextColor =
-                                                    Color.White,
-
-                                                unfocusedTextColor =
-                                                    Color.White
-                                            )
+                                        }
                                     )
 
                                     Spacer(
@@ -834,23 +792,7 @@ fun HomeScreen(
                                             Text(
                                                 "Edit Time"
                                             )
-                                        },
-
-                                        colors =
-                                            OutlinedTextFieldDefaults.colors(
-
-                                                focusedBorderColor =
-                                                    pinkColor,
-
-                                                unfocusedBorderColor =
-                                                    Color.Gray,
-
-                                                focusedTextColor =
-                                                    Color.White,
-
-                                                unfocusedTextColor =
-                                                    Color.White
-                                            )
+                                        }
                                     )
 
                                     Spacer(
@@ -921,8 +863,6 @@ fun HomeScreen(
 
                                 } else {
 
-                                    // ---------------- TASK TITLE ----------------
-
                                     Text(
 
                                         text =
@@ -950,8 +890,6 @@ fun HomeScreen(
                                             )
                                     )
 
-                                    // ---------------- PRIORITY ----------------
-
                                     Text(
 
                                         text =
@@ -973,8 +911,6 @@ fun HomeScreen(
                                                 22.dp
                                             )
                                     )
-
-                                    // ---------------- BUTTONS ----------------
 
                                     Row(
 
