@@ -60,16 +60,22 @@ fun StudyScreen() {
     val redColor =
         Color(0xFFFF1744)
 
-    // ---------------- TIMER ----------------
+    val purpleColor =
+        Color(0xFFB026FF)
 
     var customMinutes by remember {
 
         mutableStateOf("25")
     }
 
+    var breakMinutes by remember {
+
+        mutableStateOf("5")
+    }
+
     var timeLeft by remember {
 
-        mutableStateOf(0)
+        mutableStateOf(25 * 60)
     }
 
     var running by remember {
@@ -87,7 +93,15 @@ fun StudyScreen() {
         mutableStateOf(0)
     }
 
-    // ---------------- TASK ----------------
+    var sessionsCompleted by remember {
+
+        mutableStateOf(0)
+    }
+
+    var totalStudyMinutes by remember {
+
+        mutableStateOf(0)
+    }
 
     var newTask by remember {
 
@@ -114,8 +128,6 @@ fun StudyScreen() {
         )
     }
 
-    // ---------------- AUTO UPDATE TIMER ----------------
-
     LaunchedEffect(customMinutes) {
 
         if (!running && !breakMode) {
@@ -125,8 +137,6 @@ fun StudyScreen() {
                     ?: 25) * 60
         }
     }
-
-    // ---------------- TIMER ----------------
 
     LaunchedEffect(running) {
 
@@ -140,8 +150,6 @@ fun StudyScreen() {
         if (running && timeLeft == 0) {
 
             running = false
-
-            // SOUND
 
             try {
 
@@ -157,8 +165,6 @@ fun StudyScreen() {
 
             } catch (_: Exception) {
             }
-
-            // VIBRATION
 
             vibrator?.vibrate(
 
@@ -183,15 +189,21 @@ fun StudyScreen() {
 
             ).show()
 
-            // AUTO BREAK
-
             if (!breakMode) {
 
                 streak++
 
+                sessionsCompleted++
+
+                totalStudyMinutes +=
+                    customMinutes.toIntOrNull()
+                        ?: 25
+
                 breakMode = true
 
-                timeLeft = 5 * 60
+                timeLeft =
+                    (breakMinutes.toIntOrNull()
+                        ?: 5) * 60
 
                 running = true
 
@@ -206,8 +218,6 @@ fun StudyScreen() {
         }
     }
 
-    // ---------------- TIME FORMAT ----------------
-
     val minutes = timeLeft / 60
 
     val seconds = timeLeft % 60
@@ -221,8 +231,6 @@ fun StudyScreen() {
         seconds
     )
 
-    // ---------------- PROGRESS ----------------
-
     val completedCount =
         tasks.count { it.completed }
 
@@ -231,8 +239,6 @@ fun StudyScreen() {
             completedCount.toFloat() /
                     tasks.size.toFloat()
         else 0f
-
-    // ---------------- ANIMATION ----------------
 
     val infiniteTransition =
         rememberInfiniteTransition()
@@ -284,8 +290,6 @@ fun StudyScreen() {
                     Modifier.height(25.dp)
             )
 
-            // ---------------- TIMER CARD ----------------
-
             Card(
 
                 modifier = Modifier
@@ -329,10 +333,8 @@ fun StudyScreen() {
 
                     Spacer(
                         modifier =
-                            Modifier.height(20.dp)
+                            Modifier.height(25.dp)
                     )
-
-                    // INPUT
 
                     if (!running && !breakMode) {
 
@@ -347,7 +349,30 @@ fun StudyScreen() {
 
                             label = {
 
-                                Text("Minutes")
+                                Text("Study Minutes")
+                            },
+
+                            modifier =
+                                Modifier.fillMaxWidth()
+                        )
+
+                        Spacer(
+                            modifier =
+                                Modifier.height(18.dp)
+                        )
+
+                        OutlinedTextField(
+
+                            value = breakMinutes,
+
+                            onValueChange = {
+
+                                breakMinutes = it
+                            },
+
+                            label = {
+
+                                Text("Break Minutes")
                             },
 
                             modifier =
@@ -360,8 +385,6 @@ fun StudyScreen() {
                         )
                     }
 
-                    // TIMER
-
                     Text(
 
                         text = formattedTime,
@@ -372,7 +395,7 @@ fun StudyScreen() {
                             else
                                 greenColor,
 
-                        fontSize = 60.sp,
+                        fontSize = 65.sp,
 
                         fontWeight =
                             FontWeight.Bold
@@ -380,20 +403,26 @@ fun StudyScreen() {
 
                     Spacer(
                         modifier =
-                            Modifier.height(20.dp)
+                            Modifier.height(25.dp)
                     )
-
-                    // CIRCLE
 
                     CircularProgressIndicator(
 
                         progress =
                             timeLeft.toFloat() /
-                                    ((customMinutes.toIntOrNull()
-                                        ?: 25) * 60),
+                                    (
+                                            (
+                                                    if (breakMode)
+                                                        breakMinutes.toIntOrNull()
+                                                            ?: 5
+                                                    else
+                                                        customMinutes.toIntOrNull()
+                                                            ?: 25
+                                                    ) * 60
+                                            ),
 
                         modifier = Modifier
-                            .size(140.dp)
+                            .size(150.dp)
                             .rotate(rotation),
 
                         color =
@@ -411,8 +440,6 @@ fun StudyScreen() {
                     )
 
                     Row {
-
-                        // START
 
                         Button(
 
@@ -455,8 +482,6 @@ fun StudyScreen() {
                                 Modifier.width(12.dp)
                         )
 
-                        // STOP
-
                         Button(
 
                             onClick = {
@@ -480,8 +505,6 @@ fun StudyScreen() {
                                 Modifier.width(12.dp)
                         )
 
-                        // RESET
-
                         Button(
 
                             onClick = {
@@ -503,21 +526,96 @@ fun StudyScreen() {
 
                     Spacer(
                         modifier =
-                            Modifier.height(20.dp)
+                            Modifier.height(25.dp)
                     )
 
-                    Text(
+                    Card(
 
-                        text =
-                            "🔥 Streak : $streak Sessions",
+                        modifier = Modifier
+                            .fillMaxWidth(),
 
-                        color = greenColor,
+                        colors =
+                            CardDefaults.cardColors(
+                                containerColor =
+                                    Color(0xFF111111)
+                            )
 
-                        fontSize = 22.sp,
+                    ) {
 
-                        fontWeight =
-                            FontWeight.Bold
-                    )
+                        Column(
+
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(18.dp)
+                        ) {
+
+                            Text(
+
+                                text =
+                                    "🔥 Study Statistics",
+
+                                color =
+                                    greenColor,
+
+                                fontSize =
+                                    22.sp,
+
+                                fontWeight =
+                                    FontWeight.Bold
+                            )
+
+                            Spacer(
+                                modifier =
+                                    Modifier.height(15.dp)
+                            )
+
+                            Text(
+
+                                text =
+                                    "Streak : $streak Sessions",
+
+                                color =
+                                    Color.White,
+
+                                fontSize =
+                                    18.sp
+                            )
+
+                            Spacer(
+                                modifier =
+                                    Modifier.height(8.dp)
+                            )
+
+                            Text(
+
+                                text =
+                                    "Completed Sessions : $sessionsCompleted",
+
+                                color =
+                                    Color.White,
+
+                                fontSize =
+                                    18.sp
+                            )
+
+                            Spacer(
+                                modifier =
+                                    Modifier.height(8.dp)
+                            )
+
+                            Text(
+
+                                text =
+                                    "Total Study Time : $totalStudyMinutes mins",
+
+                                color =
+                                    Color.White,
+
+                                fontSize =
+                                    18.sp
+                            )
+                        }
+                    }
                 }
             }
 
@@ -525,8 +623,6 @@ fun StudyScreen() {
                 modifier =
                     Modifier.height(30.dp)
             )
-
-            // ---------------- PROGRESS ----------------
 
             Text(
 
@@ -575,8 +671,6 @@ fun StudyScreen() {
                 modifier =
                     Modifier.height(30.dp)
             )
-
-            // ---------------- ADD TASK ----------------
 
             Text(
 
@@ -645,7 +739,13 @@ fun StudyScreen() {
 
                         newTask = ""
                     }
-                }
+                },
+
+                colors =
+                    ButtonDefaults.buttonColors(
+                        containerColor =
+                            purpleColor
+                    )
 
             ) {
 
@@ -677,8 +777,6 @@ fun StudyScreen() {
                     Modifier.height(25.dp)
             )
         }
-
-        // ---------------- TASK LIST ----------------
 
         itemsIndexed(tasks) { index, task ->
 
@@ -762,8 +860,6 @@ fun StudyScreen() {
 
                     Row {
 
-                        // EDIT
-
                         IconButton(
 
                             onClick = {
@@ -788,8 +884,6 @@ fun StudyScreen() {
                                 tint = orangeColor
                             )
                         }
-
-                        // CHECKBOX
 
                         Checkbox(
 
