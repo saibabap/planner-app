@@ -15,6 +15,8 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.PictureAsPdf
 import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Storage
+import androidx.compose.material.icons.filled.VolumeUp
+import androidx.compose.material.icons.filled.Vibration
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -51,6 +53,11 @@ fun SettingsScreen() {
         mutableStateOf(true)
     }
 
+    var soundEffects by remember {
+
+        mutableStateOf(true)
+    }
+
     Column(
 
         modifier = Modifier
@@ -65,14 +72,13 @@ fun SettingsScreen() {
 
     ) {
 
-        // Title
         Text(
 
             text = "Settings",
 
             color = Color.White,
 
-            fontSize = 30.sp,
+            fontSize = 32.sp,
 
             fontWeight =
                 FontWeight.Bold
@@ -83,7 +89,6 @@ fun SettingsScreen() {
                 Modifier.height(25.dp)
         )
 
-        // Dark Mode
         SettingsSwitchCard(
 
             icon = {
@@ -117,7 +122,6 @@ fun SettingsScreen() {
                 Modifier.height(15.dp)
         )
 
-        // Notifications
         SettingsSwitchCard(
 
             icon = {
@@ -151,7 +155,6 @@ fun SettingsScreen() {
                 Modifier.height(15.dp)
         )
 
-        // Vibration
         SettingsSwitchCard(
 
             icon = {
@@ -159,7 +162,7 @@ fun SettingsScreen() {
                 Icon(
 
                     imageVector =
-                        Icons.Default.Notifications,
+                        Icons.Default.Vibration,
 
                     contentDescription =
                         null,
@@ -182,10 +185,59 @@ fun SettingsScreen() {
 
         Spacer(
             modifier =
+                Modifier.height(15.dp)
+        )
+
+        SettingsSwitchCard(
+
+            icon = {
+
+                Icon(
+
+                    imageVector =
+                        Icons.Default.VolumeUp,
+
+                    contentDescription =
+                        null,
+
+                    tint = pinkColor
+                )
+            },
+
+            title = "Sound Effects",
+
+            checked = soundEffects,
+
+            onCheckedChange = {
+
+                soundEffects = it
+            },
+
+            cardColor = cardColor
+        )
+
+        Spacer(
+            modifier =
                 Modifier.height(25.dp)
         )
 
-        // App Lock
+        Text(
+
+            text = "More Options",
+
+            color = Color.White,
+
+            fontSize = 24.sp,
+
+            fontWeight =
+                FontWeight.Bold
+        )
+
+        Spacer(
+            modifier =
+                Modifier.height(18.dp)
+        )
+
         SettingsButtonCard(
 
             icon = {
@@ -212,7 +264,6 @@ fun SettingsScreen() {
                 Modifier.height(15.dp)
         )
 
-        // Backup
         SettingsButtonCard(
 
             icon = {
@@ -239,7 +290,6 @@ fun SettingsScreen() {
                 Modifier.height(15.dp)
         )
 
-        // Export PDF
         SettingsButtonCard(
 
             icon = {
@@ -266,7 +316,6 @@ fun SettingsScreen() {
                 Modifier.height(15.dp)
         )
 
-        // Language
         SettingsButtonCard(
 
             icon = {
@@ -293,7 +342,6 @@ fun SettingsScreen() {
                 Modifier.height(15.dp)
         )
 
-        // Theme Colors
         SettingsButtonCard(
 
             icon = {
@@ -320,7 +368,6 @@ fun SettingsScreen() {
                 Modifier.height(15.dp)
         )
 
-        // Storage
         SettingsButtonCard(
 
             icon = {
@@ -347,7 +394,6 @@ fun SettingsScreen() {
                 Modifier.height(15.dp)
         )
 
-        // Feedback
         SettingsButtonCard(
 
             icon = {
@@ -374,7 +420,6 @@ fun SettingsScreen() {
                 Modifier.height(15.dp)
         )
 
-        // About
         SettingsButtonCard(
 
             icon = {
@@ -398,27 +443,87 @@ fun SettingsScreen() {
 
         Spacer(
             modifier =
-                Modifier.height(30.dp)
+                Modifier.height(35.dp)
         )
 
-        // Version
-        Text(
+        Card(
 
-            text = "Version 1.0.0",
+            modifier = Modifier
+                .fillMaxWidth(),
 
-            color = Color.Gray,
+            colors =
+                CardDefaults.cardColors(
+                    containerColor =
+                        cardColor
+                ),
 
-            fontSize = 14.sp
-        )
+            shape =
+                RoundedCornerShape(
+                    22.dp
+                )
+
+        ) {
+
+            Column(
+
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp)
+
+            ) {
+
+                Text(
+
+                    text = "Smart Daily Planner",
+
+                    color = Color.White,
+
+                    fontSize = 24.sp,
+
+                    fontWeight =
+                        FontWeight.Bold
+                )
+
+                Spacer(
+                    modifier =
+                        Modifier.height(12.dp)
+                )
+
+                Text(
+
+                    text =
+                        "Plan your tasks, track sleep, manage study sessions and improve productivity with a modern planner experience.",
+
+                    color = Color.LightGray,
+
+                    fontSize = 16.sp,
+
+                    lineHeight = 25.sp
+                )
+
+                Spacer(
+                    modifier =
+                        Modifier.height(18.dp)
+                )
+
+                Text(
+
+                    text = "Version 1.0.0",
+
+                    color = pinkColor,
+
+                    fontSize = 15.sp
+                )
+            }
+        }
 
         Spacer(
             modifier =
-                Modifier.height(20.dp)
+                Modifier.height(120.dp)
         )
     }
 }
 
-// Switch Card
 @Composable
 fun SettingsSwitchCard(
 
@@ -434,6 +539,11 @@ fun SettingsSwitchCard(
 ) {
 
     Card(
+
+        shape =
+            RoundedCornerShape(
+                22.dp
+            ),
 
         colors =
             CardDefaults.cardColors(
@@ -467,7 +577,7 @@ fun SettingsSwitchCard(
                 Spacer(
                     modifier =
                         Modifier.width(
-                            12.dp
+                            14.dp
                         )
                 )
 
@@ -477,7 +587,10 @@ fun SettingsSwitchCard(
 
                     color = Color.White,
 
-                    fontSize = 18.sp
+                    fontSize = 18.sp,
+
+                    fontWeight =
+                        FontWeight.Medium
                 )
             }
 
@@ -492,7 +605,6 @@ fun SettingsSwitchCard(
     }
 }
 
-// Button Card
 @Composable
 fun SettingsButtonCard(
 
@@ -504,6 +616,11 @@ fun SettingsButtonCard(
 ) {
 
     Card(
+
+        shape =
+            RoundedCornerShape(
+                22.dp
+            ),
 
         colors =
             CardDefaults.cardColors(
@@ -528,7 +645,7 @@ fun SettingsButtonCard(
             Spacer(
                 modifier =
                     Modifier.width(
-                        12.dp
+                        14.dp
                     )
             )
 
@@ -538,7 +655,10 @@ fun SettingsButtonCard(
 
                 color = Color.White,
 
-                fontSize = 18.sp
+                fontSize = 18.sp,
+
+                fontWeight =
+                    FontWeight.Medium
             )
         }
     }
