@@ -24,13 +24,13 @@ fun SplashScreen(
     navController: NavController
 ) {
 
-    // Animation
+  
     val scale = remember {
 
         Animatable(0.5f)
     }
 
-    // Animation Effect
+ 
     LaunchedEffect(Unit) {
 
         scale.animateTo(
@@ -54,7 +54,6 @@ fun SplashScreen(
         }
     }
 
-    // Gradient Background
     val gradient = Brush.verticalGradient(
 
         colors = listOf(
@@ -84,7 +83,7 @@ fun SplashScreen(
 
         ) {
 
-            // App Icon
+          
             Icon(
 
                 imageVector =
@@ -106,7 +105,7 @@ fun SplashScreen(
                     Modifier.height(20.dp)
             )
 
-            // App Name
+           
             Text(
 
                 text =
