@@ -58,40 +58,31 @@ fun AddTaskScreen(
     val scope =
         rememberCoroutineScope()
 
-    // STATES
-
     var task by remember {
-
         mutableStateOf("")
     }
 
     var description by remember {
-
         mutableStateOf("")
     }
 
     var time by remember {
-
         mutableStateOf("")
     }
 
     var date by remember {
-
         mutableStateOf("")
     }
 
     var priority by remember {
-
         mutableStateOf("Medium")
     }
 
     var reminder5Min by remember {
-
         mutableStateOf(true)
     }
 
     val priorities = listOf(
-
         "High",
         "Medium",
         "Low"
@@ -99,8 +90,6 @@ fun AddTaskScreen(
 
     val calendar =
         Calendar.getInstance()
-
-    // TIME PICKER
 
     val timePicker =
         TimePickerDialog(
@@ -143,8 +132,6 @@ fun AddTaskScreen(
 
             false
         )
-
-    // DATE PICKER
 
     val datePicker =
         DatePickerDialog(
@@ -189,8 +176,6 @@ fun AddTaskScreen(
                 Modifier.height(10.dp)
         )
 
-        // TITLE
-
         Text(
 
             text = "Create Task",
@@ -207,8 +192,6 @@ fun AddTaskScreen(
             modifier =
                 Modifier.height(30.dp)
         )
-
-        // TASK FIELD
 
         Text(
 
@@ -279,8 +262,6 @@ fun AddTaskScreen(
                 Modifier.height(25.dp)
         )
 
-        // DESCRIPTION
-
         Text(
 
             text = "Description",
@@ -350,8 +331,6 @@ fun AddTaskScreen(
             modifier =
                 Modifier.height(25.dp)
         )
-
-        // DATE
 
         Text(
 
@@ -441,8 +420,6 @@ fun AddTaskScreen(
                 Modifier.height(20.dp)
         )
 
-        // TIME
-
         Text(
 
             text = "Select Time",
@@ -530,8 +507,6 @@ fun AddTaskScreen(
             modifier =
                 Modifier.height(25.dp)
         )
-
-        // PRIORITY
 
         Text(
 
@@ -641,8 +616,6 @@ fun AddTaskScreen(
                 Modifier.height(25.dp)
         )
 
-        // 5 MIN REMINDER
-
         Card(
 
             shape =
@@ -727,8 +700,6 @@ fun AddTaskScreen(
                 Modifier.height(40.dp)
         )
 
-        // SAVE BUTTON
-
         Button(
 
             onClick = {
@@ -791,15 +762,11 @@ fun AddTaskScreen(
                         )
                     }
 
-                    // NOTIFICATION
-
                     NotificationHelper(
                         context
                     ).showNotification(
                         task
                     )
-
-                    // REAL ALARM
 
                     AlarmScheduler(
                         context
@@ -818,8 +785,6 @@ fun AddTaskScreen(
                         Toast.LENGTH_SHORT
 
                     ).show()
-
-                    // CLEAR
 
                     task = ""
                     description = ""
